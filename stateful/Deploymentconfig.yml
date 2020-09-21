@@ -28,6 +28,7 @@ spec:
           volumeMounts:
             - name: mysql-persistent-storage
               mountPath: /var/lib/mysql
+          # In my first try I didn't put the resources part below and although my configuration was correct it was killed by OOM (out of memory)
           resources:
             requests:
               cpu: 100m
