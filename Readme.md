@@ -36,10 +36,30 @@ and `StatefulSets` should be used for stateful applications, now we come to this
 story I wanted to deploy a database, so my application was stateful and if I wanted to listen to their advice I had to use
 `StatefulSets` workload, but the example I was following had used `Deploymeny` workload which confused me.Here is what was
 going on.<br/>
-I wanted to deploy a mysql container so I needed 
-[comment] persistent volume, pod restart, data reliable, readwriteonce, the second pod access after restart, unique id, ask parham, single instance, strategy = recreate
+I wanted to deploy a mysql container, so I needed a `PersistentVolume`, the pod may restart for various reasons and if I 
+don't use an underlying persistent volume I lose all my data.I have put the access mode of the persistent volume equal to
+`ReadWriteOne` it means that the storage can only be accessed by a single node **but wait** what if the pod restarts??!
+**then the newer pod cannot access the persistent volume cause it's another pod??!** here is why we use Statefulsets.
+##### StatefulSets VS Deployment
+When we use `Deployment` workload if a pod restarts then the newer pod is completely different from the first one, and the
+persistent volume thinks it's another node and doesn't let access, but statefulsets workload manage pods with their unique
+id (for example hostname) so if a pod restarts the newer pod has the same unique id, so the persistent volume thinks it's
+the same node as a result the pod has all the failed pod accesses.Another question rises up, in my stateful directory I 
+have used deployment workload so what if it restarts, it cannot connect to the persistent volume any more??! well, what I
+have done in that directory is called `Single-instance stateful application`.
 
+##### Single-instance stateful application
+if I manage more than one pod then you're right everything will be broken but in that specific example everything works 
+fine because<br/>
+- first:It is single instance
+- second:it's `Strategy` is `Recreate`
 
+I cannot have more than one pod, **Why?** the underlying persistent volume is ReadWriteOnce so more than one pod cannot 
+access it.You may ask about what the statefulset workload does, **it gives each pod its own persistent volume**.<br/>
+The strategy should be `Recreate` so the first pod terminates completely and a new one with the exact same configuration 
+will be managed, so it doesn't loose any access.
+
+With the preceding explanation you should have concluded that in case of a stateful application `Rolling Update` is impossible.
 
 
 #### deployment strategies
