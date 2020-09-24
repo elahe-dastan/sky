@@ -88,6 +88,12 @@ it.
 I got a little confused.What does a **Service** exactly do??<br/>
 It is both a load balancer and a DNS name.
 
-## Redis
-I had to deploy a redis on kubernetese.Here is what I did in the redis directory, I need a single instance redis master 
-to write the data and in order to make it highly available I manage replica redis slaves to read the data.
+## Empty Dir
+I want to create a redis pod and I have the same problem that I had while creating mysql pod.Redis has a volume mount in 
+it's Dockerfile but I don't want the data on my redis to be persistent in fact I want my redis to be as fast as possible,
+so I don't want it to write data on the disk as a result I used Empty Dir. Here is more explanation:
+An emptyDir volume is first created when a Pod is assigned to a Node, and exists as long as that Pod is running on that 
+node. As the name says, it is initially empty. Containers in the Pod can all read and write the same files in the emptyDir 
+volume, though that volume can be mounted at the same or different paths in each Container. When a Pod is removed from a 
+node for any reason, the data in the emptyDir is deleted forever.(Note: A Container crashing does NOT remove a Pod from 
+a node, so the data in an emptyDir volume is safe across Container crashes.)
