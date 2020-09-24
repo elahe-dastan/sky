@@ -61,6 +61,21 @@ will be managed, so it doesn't loose any access.
 
 With the preceding explanation you should have concluded that in case of a stateful application `Rolling Update` is impossible.
 
+##### Accessing mysql instance
+I had my mysql pod up and running, I decided to have a mysql client pod and use it query my mysql. I wrote this command:<br/>
+```sh
+$ kubectl run -it --rm --image=mysql:8.0 --restart=Never --requests=cpu=100m,memory=256Mi mysql-client -- mysql -h mysql -ppassword
+```
+and unexpectedly I got this error<br/>
+failed to open log file "/var/log/pods/...":open /var/log/pods/... no such file or directory<br/>
+This error can have so many reasons, in my case it needed a persistent volume. **Why??** read another story:<br/>
+We all know that everything in a container lives as long as the container is up and running and since the container be
+deleted all the data in the container is gone forever except we manage a volume. Once, I wanted to create a mysql 
+container and I hadn't passed any volume I deleted the container and after some time I created another mysql container
+surprisingly all the previous data was there :flushed: it happens because in the `Dockerfile` of mysql image is set a 
+volume.
+I was using `OpenShift` and openshift checks that the dockerfile needs a volume and doesn't let me create a pod without
+it.
 
 #### deployment strategies
 - recreate: terminate the old version and release the new one
@@ -72,3 +87,7 @@ With the preceding explanation you should have concluded that in case of a state
 ## Service 
 I got a little confused.What does a **Service** exactly do??<br/>
 It is both a load balancer and a DNS name.
+
+## Redis
+I had to deploy a redis on kubernetese.Here is what I did in the redis directory, I need a single instance redis master 
+to write the data and in order to make it highly available I manage replica redis slaves to read the data.
