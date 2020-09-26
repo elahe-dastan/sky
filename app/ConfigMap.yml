@@ -95,7 +95,7 @@ parameters:
   - name: DATABASE_PASSWORD
     displayName: database password
     required: true
-    value: "sattar"
+    value: "password"
   - name: DATABASE_MAX_CONN
     displayName: database max conn
     required: true
