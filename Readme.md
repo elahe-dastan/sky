@@ -101,3 +101,9 @@ a node, so the data in an emptyDir volume is safe across Container crashes.)
 ## Route
 In order for services to be exposed externally, an OpenShift route allows you to associate a service with an 
 externally-reachable host name. This edge host name is then used to route traffic to the service. 
+
+## oc vs kubectl
+
+## If the container doesn't have anything to do?? busybox-sleep
+## invalid port range
+## Connect to one pod from another
