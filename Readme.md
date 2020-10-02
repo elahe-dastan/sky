@@ -98,6 +98,13 @@ volume, though that volume can be mounted at the same or different paths in each
 node for any reason, the data in the emptyDir is deleted forever.(Note: A Container crashing does NOT remove a Pod from 
 a node, so the data in an emptyDir volume is safe across Container crashes.)
 
+## Disable Redis Persistence
+Redis cloud provides two methods to persist the data to disk. They are Append Only File (AOF) and Snapshot (RDB).
+Snapshot or RDB takes the data at that moment and writes it to the disk, in a binary file called dump.rdb.
+On the other hand, AOF writes all the incoming “write” commands to the disk. Data persistence is optional, and we can disable it too.
+Though persistence prevents data loss, it increases the disk space usage abundantly. So, in cases where we can't persist 
+large data on disk, we disable persistence.
+
 ## Route
 In order for services to be exposed externally, an OpenShift route allows you to associate a service with an 
 externally-reachable host name. This edge host name is then used to route traffic to the service. 
