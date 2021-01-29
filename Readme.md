@@ -109,6 +109,8 @@ large data on disk, we disable persistence.
 In order for services to be exposed externally, an OpenShift route allows you to associate a service with an 
 externally-reachable host name. This edge host name is then used to route traffic to the service. 
 
+## lost and found mount postgres
+## docker container ip
 ## oc vs kubectl
 
 ## If the container doesn't have anything to do?? busybox-sleep
