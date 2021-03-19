@@ -109,7 +109,14 @@ large data on disk, we disable persistence.
 In order for services to be exposed externally, an OpenShift route allows you to associate a service with an 
 externally-reachable host name. This edge host name is then used to route traffic to the service. 
 
-## lost and found mount postgres
+## lost + found
+Once, I wanted to create a postgres pod, and I got an error containing the key word `lost + found`, here is the problem,
+when you create a pod or a container and set a **volume** it is mandatory that the directory on the host that you wanna 
+mount to be completely "empty" which is not always the case. A simple solution is to use `PGDATA`, this is what happens 
+you have a `mount path` which is a path inside your container and this path is mounted to the root of a disk as a volume, 
+but the root of the disk is not empty, so you don't change the mount path, and it is still mounted to the root of the disk, 
+but you say that the `PGDATA` which is the place on the disk that you want to write and read from is a subdirectory on the 
+disk.
 ## docker container ip
 ## oc vs kubectl
 
