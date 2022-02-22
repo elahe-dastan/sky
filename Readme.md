@@ -117,6 +117,11 @@ you have a `mount path` which is a path inside your container and this path is m
 but the root of the disk is not empty, so you don't change the mount path, and it is still mounted to the root of the disk, 
 but you say that the `PGDATA` which is the place on the disk that you want to write and read from is a subdirectory on the 
 disk.
+
+## Common oc commands
+1. push manifest to kubernetes: oc apply -f <file>
+2. BuildConfig manifest is a kind to build an image and we run it by: oc start-build <name>
+3. you can get your buildconfigs by: oc get bc
 ## docker container ip
 ## oc vs kubectl
 
