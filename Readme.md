@@ -122,6 +122,7 @@ disk.
 1. push manifest to kubernetes: oc apply -f <file>
 2. BuildConfig manifest is a kind to build an image and we run it by: oc start-build <name>
 3. you can get your buildconfigs by: oc get bc
+4. you can get your imagestreams by: oc get is
 ## docker container ip
 ## oc vs kubectl
 
