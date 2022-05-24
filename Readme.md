@@ -118,6 +118,11 @@ but the root of the disk is not empty, so you don't change the mount path, and i
 but you say that the `PGDATA` which is the place on the disk that you want to write and read from is a subdirectory on the 
 disk.
 
+## Object Spec and Status
+Almost every Kubernetes object includes two nested object fields that govern the object's configuration: the object spec and the object status. For objects that have a spec, you have to set this when you create the object, providing a description of the characteristics you want the resource to have: its `desired state`.
+
+The status describes the `current state` of the object, supplied and updated by the Kubernetes system and its components. The Kubernetes control plane continually and actively manages every object's actual state to match the desired state you supplied.
+
 ## Common oc commands
 1. push manifest to kubernetes: oc apply -f <file>
 2. BuildConfig manifest is a kind to build an image and we run it by: oc start-build <name>
