@@ -84,6 +84,19 @@ it.
 - canary: release a new version to a subset of users, then proceed to a full rollout
 - a/b testing: release a new version to a subset of users in a precise way (HTTP headers, cookie, weight, etc.).
 
+### Pod Management Policy
+The story that took me here is funny. I wanted to have a [h2o cluster](https://h2o.ai/), in this cluster one pod that is the master should mark itself as ready to accept load and all other pods mark themselves as not ready (we do it by using isLeader route as the rediness probe). This may cause a problem, usually and by default the `podManagementPolicy` is set OrderedReady in which kuberenetes deploys one pod waits for it to be running and ready then deploys the second pod and so on. In our h2o cluster this puts us in trouble cause our worker pods will never mark themselves as ready and we can't scale our pods to the number we desire. The solution is cchaning the `podManagementPolicy` to Parallel.
+
+#### Parallel Pod Management
+Parallel pod management tells the StatefulSet contriller to launch or terminate all Pods in parallel, and to **not wait for Pods to become Running and Ready** or completely terminated prior ro launching or terminating another Pod.
+
+##### Pay attention
+If your StatefulSet is up and then you want to change the podManagementPolicy you get this error ```error: Edit cancelled, no valid changes were saved``` that's because:
+
+![PodManagementPolicy](https://user-images.githubusercontent.com/36500888/170239794-9f9913ba-b42b-4aec-8d05-eee318b9a527.png)
+
+You have to delete yout manifest, change and apply again.
+
 ## Service 
 I got a little confused.What does a **Service** exactly do??<br/>
 It is both a load balancer and a DNS name.
