@@ -142,6 +142,10 @@ The status describes the `current state` of the object, supplied and updated by 
 3. you can get your buildconfigs by: oc get bc
 4. you can get your imagestreams by: oc get is
 5. oc port-forward {pod} port:port
+6. get resource of namespace: oc describe quota
+7. get resource of group: oc describe resourcequota
+8. test pod: 
+kubectl run nats-box --timeout=10m --image=natsio/nats-box:latest --rm -it --restart=Never --command -- sh
 ## docker container ip
 ## oc vs kubectl
 
