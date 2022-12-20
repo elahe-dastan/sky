@@ -152,3 +152,9 @@ kubectl run nats-box --timeout=10m --image=natsio/nats-box:latest --rm -it --res
 ## If the container doesn't have anything to do?? busybox-sleep
 ## invalid port range
 ## Connect to one pod from another
+
+Delete all spark application that is failed:
+
+```bash
+oc get sparkapplication -o json | jq '.items[] | select(.status.applicationState.state == "FAILED") | .metadata.name' -r | xargs oc delete sparkapplication '{}'
+```
